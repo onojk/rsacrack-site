@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Collapsing Triangle — rsacrack</title>
+<meta name="description" content="An interactive picture of why balanced semiprimes are hard to factor: anchor a triangle at a number's two prime factors, climb the apex, and watch the angle collapse toward zero. The rate of collapse is a fingerprint of factor balance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1814; --ink-soft:#4a4640; --ink-faint:#7d776c;
+    --paper:#f6f2e9; --paper-deep:#efe9db; --line:#d9d1bf;
+    --kink:#b2401f; --kink-soft:#cf8a6b; --turn:#2f5d63; --turn-soft:#5DCAA5;
+    --maxw:46rem;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Spectral",Georgia,serif;font-size:1.16rem;line-height:1.68;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+  a{color:var(--turn);text-decoration:none}
+
+  header.hero{padding:4.5rem 0 0}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);margin:0 0 1.3rem;}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:500;
+    font-size:clamp(2.4rem,6.5vw,3.8rem);line-height:1.02;letter-spacing:-.02em;margin:0 0 1.1rem;}
+  h1 .em{color:var(--kink)}
+  .tagline{font-size:1.28rem;line-height:1.5;color:var(--ink-soft);font-style:italic;
+    max-width:33rem;margin:0 0 2rem;}
+
+  .kinkrule{display:block;width:100%;height:30px;margin:2.6rem 0;overflow:visible}
+  .kinkrule path{fill:none;stroke:var(--kink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+  p{margin:0 0 1.4rem}
+  .intro p:first-of-type::first-letter{font-family:"Fraunces",serif;font-weight:500;float:left;
+    font-size:4.2rem;line-height:.78;padding:.35rem .55rem 0 0;color:var(--kink);}
+  strong{font-weight:500}
+  em{font-style:italic}
+
+  /* ---- the interactive instrument ---- */
+  .instrument{background:var(--paper-deep);border:1px solid var(--line);border-radius:6px;
+    padding:1.4rem;margin:2.2rem 0;}
+  .stage{width:100%;display:block;touch-action:none;cursor:ns-resize;border-radius:4px}
+  .readout{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+    font-family:"IBM Plex Mono",monospace;margin-top:1rem;flex-wrap:wrap}
+  .readout .angle{font-size:2rem;color:var(--kink);font-weight:500;font-variant-numeric:tabular-nums}
+  .readout .angle small{font-size:.9rem;color:var(--ink-faint);font-weight:400}
+  .readout .meta{font-size:.78rem;color:var(--ink-faint);line-height:1.5;text-align:right}
+  .controls{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;align-items:center}
+  .controls .lbl{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-faint);width:100%;margin-bottom:.1rem}
+  button.chip{font-family:"IBM Plex Mono",monospace;font-size:.82rem;background:var(--paper);
+    border:1px solid var(--line);border-radius:4px;padding:.4rem .7rem;cursor:pointer;color:var(--ink-soft);
+    transition:all .15s}
+  button.chip:hover{border-color:var(--kink-soft);color:var(--kink)}
+  button.chip[aria-pressed="true"]{background:var(--kink);border-color:var(--kink);color:#fff}
+  button.chip:focus-visible{outline:2px solid var(--turn);outline-offset:2px}
+  .hint{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink-faint);
+    margin-top:.9rem;text-align:center}
+
+  h2{font-family:"Fraunces",serif;font-weight:500;font-size:1.55rem;letter-spacing:-.01em;
+    margin:3rem 0 1.2rem;}
+  .footnote{font-size:.96rem;line-height:1.55;color:var(--ink-faint);font-style:italic;
+    margin:2.4rem 0 0;padding-top:1.4rem;border-top:1px solid var(--line)}
+
+  footer{margin-top:3.5rem;border-top:1px solid var(--line);padding:2.2rem 0 5rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.76rem;line-height:1.8;color:var(--ink-faint);}
+  footer a{border-bottom:1px solid transparent;transition:border-color .2s}
+  footer a:hover{border-color:var(--turn)}
+
+  @media (max-width:560px){
+    body{font-size:1.07rem} header.hero{padding-top:3rem}
+    .readout .angle{font-size:1.6rem}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .kinkrule path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2s ease-out forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">An interactive · the geometry of difficulty</p>
+    <h1>The collapsing <span class="em">triangle</span></h1>
+    <p class="tagline">Anchor a triangle at a number's two prime factors, climb the apex, and watch the angle drill toward zero. How fast it collapses is a fingerprint of how the number was built.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="intro">
+      <p>Every semiprime — a number that is exactly two primes multiplied — has a natural triangle. Plant the two feet of its base at the two prime factors, <span style="font-family:'IBM Plex Mono',monospace;font-size:.9em">p</span> and <span style="font-family:'IBM Plex Mono',monospace;font-size:.9em">q</span>. Then send the apex climbing straight up. As it rises, the peak angle narrows — more and more acute, halving with every doubling of height, approaching zero but never touching it.</p>
+    </div>
+
+    <div class="instrument">
+      <canvas id="stage" class="stage" width="700" height="460" aria-label="Drag vertically to climb the apex of the triangle and watch the apex angle collapse toward zero."></canvas>
+      <div class="readout">
+        <div class="angle"><span id="angleVal">—</span><small>° apex angle</small></div>
+        <div class="meta" id="meta">N = · base q−p = · height = </div>
+      </div>
+      <div class="controls">
+        <span class="lbl">Pick a number to factor</span>
+        <button class="chip" data-n="121" data-p="11" data-q="11">121 = 11×11</button>
+        <button class="chip" data-n="161" data-p="7" data-q="23">161 = 7×23</button>
+        <button class="chip" data-n="143" data-p="11" data-q="13">143 = 11×13</button>
+        <button class="chip" data-n="129" data-p="3" data-q="43">129 = 3×43</button>
+        <button class="chip" data-n="166" data-p="2" data-q="83">166 = 2×83</button>
+      </div>
+      <p class="hint">Drag up and down on the diagram to climb the apex · or use ↑ ↓ when focused</p>
+    </div>
+
+    <svg class="kinkrule" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,15 L130,15 L160,4 L190,26 L220,15 L600,15"/>
+    </svg>
+
+    <h2>What the collapse tells you</h2>
+
+    <p>The only thing that keeps the peak open is the <strong>base</strong> — the distance <span style="font-family:'IBM Plex Mono',monospace;font-size:.9em">q − p</span> between the two prime factors. At any height the angle is, near enough, that base divided by how high you've climbed. So the triangle is a magnifying glass for one thing: the gap between a number's two primes.</p>
+
+    <p>Try <strong>121 = 11 × 11</strong>. Its two primes are equal, so the gap is zero, the base has no width, and the triangle is already flat — collapsed before it begins. Now try <strong>166 = 2 × 83</strong>. The primes are far apart, the base is wide, and the peak stays stubbornly open, resisting the climb. The more lopsided the factorization, the slower the collapse. The more balanced, the faster it drills to nothing.</p>
+
+    <p>And that is the whole shape of the difficulty. A number with a small factor — like 166, with its 2 — keeps a wide base: there is a big, obvious signal, and such numbers fall to simple trial division in moments. A number whose two primes are nearly equal keeps almost no base at all: its triangle collapses instantly, there is no signal left to read, and it is exactly these <em>balanced</em> semiprimes that resist factoring. RSA chooses its two primes to be enormous and nearly equal on purpose — the flattest possible triangle, the one with nothing left to see.</p>
+
+    <p class="footnote">An honest note: this is a way to <em>see</em> the difficulty, not a way to defeat it. The collapse rate reads the gap q − p — but knowing that gap, together with the number itself, is already to have the factors. The picture displays the factor relationship beautifully once you have it, and offers no shortcut to recover it when you don't. What it does show, plainly, is <em>why</em> the hard cases are hard: they are the triangles that have already collapsed into a line.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="/">← rsacrack</a> · a companion to <a href="https://theroom.rsacrack.com">The Room You Walk Into</a><br>
+    Jonathan Kendall — San Diego · <a href="https://github.com/onojk">github.com/onojk</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var cvs=document.getElementById('stage'), ctx=cvs.getContext('2d');
+  var W=cvs.width, H=cvs.height;
+  var state={n:143,p:11,q:13};
+  // climb parameter t in [0,1] -> height grows; map so angle halves with doubling
+  var climb=0.42; // 0=low apex (wide angle), 1=very high (near 0)
+  var DPR=Math.max(1, window.devicePixelRatio||1);
+
+  function resize(){
+    var cssW=cvs.clientWidth;
+    var cssH=Math.round(cssW*0.657);
+    cvs.width=Math.round(cssW*DPR); cvs.height=Math.round(cssH*DPR);
+    W=cvs.width; H=cvs.height; ctx.setTransform(DPR,0,0,DPR,0,0);
+    W=cssW; H=cssH; draw();
+  }
+
+  function heightFromClimb(c){
+    // exponential climb: height = base * 2^(c*MAX)  -> angle halves each unit
+    var minH=40, maxExp=7.5;
+    return minH*Math.pow(2, c*maxExp);
+  }
+
+  function apexAngleDeg(baseW, h){
+    // half-angle = atan( (baseW/2) / h ); full apex angle in degrees
+    var half=Math.atan((baseW/2)/h);
+    return 2*half*180/Math.PI;
+  }
+
+  function draw(){
+    var pad=46;
+    var groundY=H-pad;
+    var cx=W*0.46;
+    // visual base width scaled from (q-p), but keep a min so single triangle reads
+    var gap=state.q-state.p;
+    var baseVis=Math.max(6, Math.min(W*0.30, 10+gap*4.0));
+    var ax=cx-baseVis/2, bx=cx+baseVis/2;
+    var h=heightFromClimb(climb);
+    // scale height into pixels (cap so it stays on canvas, but angle uses true h)
+    var hpx=Math.min(groundY-30, 30+ (Math.log2(h/40))*((groundY-60)/7.5) );
+    var apexY=groundY-hpx, apexX=cx;
+    // true apex angle from the real factor gap and the real climb height
+    var trueAngle=apexAngleDeg(state.q-state.p, h);
+
+    ctx.clearRect(0,0,W,H);
+    // ground
+    ctx.strokeStyle="#d9d1bf"; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(pad,groundY); ctx.lineTo(W-pad,groundY); ctx.stroke();
+    // climb guide
+    ctx.strokeStyle="rgba(178,64,31,0.25)"; ctx.setLineDash([3,4]);
+    ctx.beginPath(); ctx.moveTo(apexX,groundY); ctx.lineTo(apexX,28); ctx.stroke();
+    ctx.setLineDash([]);
+    // triangle
+    if(state.q-state.p===0){
+      // degenerate: flat line
+      ctx.strokeStyle="#2f5d63"; ctx.lineWidth=2.5;
+      ctx.beginPath(); ctx.moveTo(ax,groundY); ctx.lineTo(bx,groundY); ctx.stroke();
+    } else {
+      ctx.fillStyle="rgba(207,138,107,0.16)";
+      ctx.strokeStyle="#b2401f"; ctx.lineWidth=2;
+      ctx.beginPath();
+      ctx.moveTo(ax,groundY); ctx.lineTo(bx,groundY); ctx.lineTo(apexX,apexY); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+    }
+    // base feet
+    function foot(x,label){
+      ctx.fillStyle="#2f5d63"; ctx.beginPath(); ctx.arc(x,groundY,5,0,7); ctx.fill();
+      ctx.fillStyle="#2f5d63"; ctx.font="13px 'IBM Plex Mono',monospace"; ctx.textAlign="center";
+      ctx.fillText(label,x,groundY+22);
+    }
+    foot(ax, state.p+""); foot(bx, state.q+"");
+    // apex dot
+    ctx.fillStyle="#b2401f"; ctx.beginPath(); ctx.arc(apexX,apexY,5,0,7); ctx.fill();
+    // angle arc at apex
+    if(state.q-state.p!==0){
+      ctx.strokeStyle="#b2401f"; ctx.lineWidth=1.2;
+      var aL=Math.atan2(groundY-apexY, ax-apexX), aR=Math.atan2(groundY-apexY, bx-apexX);
+      ctx.beginPath(); ctx.arc(apexX,apexY,22,Math.min(aL,aR),Math.max(aL,aR)); ctx.stroke();
+    }
+    // labels
+    ctx.fillStyle="#7d776c"; ctx.font="11px 'IBM Plex Mono',monospace"; ctx.textAlign="left";
+    ctx.fillText("apex climbs ↑  (drag)", apexX+12, Math.max(40,apexY));
+    ctx.textAlign="left";
+    ctx.fillText("base = q − p = "+(state.q-state.p), pad, groundY+34);
+
+    // commit readout
+    document.getElementById('angleVal').textContent=trueAngle.toFixed(trueAngle<1?3:2);
+    document.getElementById('meta').innerHTML="N = "+state.n+"  ·  base q−p = "+(state.q-state.p)+"  ·  height = "+Math.round(h);
+  }
+
+  // dragging climbs the apex
+  var dragging=false, lastY=0;
+  function setClimbFromDelta(dy){
+    climb=Math.max(0,Math.min(1, climb + dy*0.0016));
+    draw();
+  }
+  function pos(e){ return (e.touches?e.touches[0].clientY:e.clientY); }
+  cvs.addEventListener('pointerdown',function(e){dragging=true;lastY=e.clientY;cvs.setPointerCapture(e.pointerId);});
+  cvs.addEventListener('pointermove',function(e){ if(!dragging)return; var y=e.clientY; setClimbFromDelta(-(y-lastY)); lastY=y;});
+  cvs.addEventListener('pointerup',function(e){dragging=false;});
+  cvs.addEventListener('pointercancel',function(){dragging=false;});
+  cvs.setAttribute('tabindex','0');
+  cvs.addEventListener('keydown',function(e){
+    if(e.key==='ArrowUp'){climb=Math.min(1,climb+0.03);draw();e.preventDefault();}
+    if(e.key==='ArrowDown'){climb=Math.max(0,climb-0.03);draw();e.preventDefault();}
+  });
+
+  // chips
+  var chips=document.querySelectorAll('.chip');
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){
+      chips.forEach(function(x){x.setAttribute('aria-pressed','false');});
+      c.setAttribute('aria-pressed','true');
+      state={n:+c.dataset.n,p:+c.dataset.p,q:+c.dataset.q};
+      draw();
+    });
+  });
+  // default selection
+  document.querySelector('.chip[data-n="143"]').setAttribute('aria-pressed','true');
+
+  window.addEventListener('resize',resize);
+  resize();
+})();
+</script>
+</body>
+</html>
