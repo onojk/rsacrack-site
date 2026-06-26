@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rsacrack — factoring, primes, and the wall · Jonathan Kendall</title>
+<meta name="description" content="Research on the geometry of factoring: semiprimes, the PrimeHelix construction, the gyre, and why the difficulty of factoring may be structural. Essays and papers by Jonathan Kendall.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1814;
+    --ink-soft:#4a4640;
+    --ink-faint:#7d776c;
+    --paper:#f6f2e9;
+    --paper-deep:#efe9db;
+    --line:#d9d1bf;
+    --kink:#b2401f;
+    --turn:#2f5d63;
+    --maxw:46rem;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Spectral",Georgia,serif;font-size:1.16rem;line-height:1.68;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+  a{color:var(--turn);text-decoration:none}
+
+  /* hero */
+  header.hero{padding:5rem 0 0}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);margin:0 0 1.4rem;
+  }
+  h1{
+    font-family:"Fraunces",Georgia,serif;font-weight:500;
+    font-size:clamp(2.8rem,8vw,4.6rem);line-height:1;letter-spacing:-.02em;
+    margin:0 0 1.1rem;
+  }
+  h1 .dot{color:var(--kink)}
+  .tagline{
+    font-size:1.32rem;line-height:1.5;color:var(--ink-soft);font-style:italic;
+    max-width:33rem;margin:0 0 2.4rem;
+  }
+  .hero-meta{
+    font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.04em;
+    color:var(--ink-faint);border-top:1px solid var(--line);padding-top:1.1rem;
+  }
+
+  /* the kink rule */
+  .kinkrule{display:block;width:100%;height:34px;margin:3rem 0;overflow:visible}
+  .kinkrule path{fill:none;stroke:var(--kink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+  /* intro */
+  .intro p{margin:0 0 1.4rem}
+  .intro p:first-of-type::first-letter{
+    font-family:"Fraunces",serif;font-weight:500;float:left;font-size:4.4rem;
+    line-height:.78;padding:.35rem .55rem 0 0;color:var(--kink);
+  }
+  strong{font-weight:500}
+  em{font-style:italic}
+
+  /* section heading */
+  h2{
+    font-family:"Fraunces",serif;font-weight:500;font-size:1.4rem;
+    letter-spacing:.01em;margin:3.4rem 0 1.4rem;
+  }
+  .h2-eyebrow{
+    display:block;font-family:"IBM Plex Mono",monospace;font-size:.7rem;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--kink);
+    margin-bottom:.4rem;font-weight:500;
+  }
+
+  /* work list */
+  .work{list-style:none;margin:0;padding:0}
+  .work li{border-top:1px solid var(--line)}
+  .work li:last-child{border-bottom:1px solid var(--line)}
+  .work a.entry{
+    display:block;padding:1.5rem 0;color:var(--ink);
+    transition:padding-left .18s ease, color .18s ease;
+  }
+  .work a.entry:hover{padding-left:.6rem;color:var(--kink)}
+  .work .row{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+  .work .title{
+    font-family:"Fraunces",serif;font-weight:500;font-size:1.45rem;line-height:1.15;
+  }
+  .work .kind{
+    font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--line);border-radius:3px;padding:.18em .5em;white-space:nowrap;
+  }
+  .work .blurb{
+    display:block;margin-top:.5rem;font-size:1.04rem;line-height:1.5;
+    color:var(--ink-soft);max-width:38rem;
+  }
+  .work .ext{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--turn)}
+
+  footer{
+    margin-top:4rem;border-top:1px solid var(--line);padding:2.2rem 0 5rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.76rem;line-height:1.8;
+    color:var(--ink-faint);letter-spacing:.02em;
+  }
+  footer a{border-bottom:1px solid transparent;transition:border-color .2s}
+  footer a:hover{border-color:var(--turn)}
+
+  @media (max-width:560px){
+    body{font-size:1.07rem}
+    header.hero{padding-top:3.5rem}
+    .tagline{font-size:1.15rem}
+    .work .title{font-size:1.25rem}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .kinkrule path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.2s ease-out forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Factoring · primes · the wall</p>
+    <h1>rsacrack<span class="dot">.</span></h1>
+    <p class="tagline">Notes from the edge of an unsolved problem — the geometry of factoring, and why the difficulty might be built into the numbers themselves.</p>
+    <p class="hero-meta">Jonathan Kendall · number theory, by intuition first</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,17 L120,17 L150,4 L180,30 L210,17 L600,17"/>
+    </svg>
+
+    <div class="intro">
+      <p>RSA encryption rests on a single asymmetry: multiplying two large primes is easy, and recovering them from the product is hard. That gap is the whole edifice — and no one has proved it is permanent. This is a working notebook on <em>why</em> the gap is there, approached not through cryptography but through shape: marbles on a number line, semiprime triangles, a logarithmic spiral, and a custom unit of turning.</p>
+
+      <p>The throughline is a claim that keeps recovering itself from different angles — that factoring resists us because a number's <strong>magnitude</strong> and its <strong>factors</strong> are two readings that never reduce to one. The work below circles that claim, building it up from physical pictures before reaching for abstraction, and prefers an honest null result over an overclaim.</p>
+    </div>
+
+    <h2><span class="h2-eyebrow">Essays</span>Reading the wall</h2>
+    <ul class="work">
+      <li>
+        <a class="entry" href="https://theroom.rsacrack.com">
+          <span class="row"><span class="title">The Room You Walk Into</span><span class="kind">essay</span></span>
+          <span class="blurb">The primes as architecture — kinks that forge the rooms they open, two clocks that never merge, and why a factorization can only be known in hindsight. The most recent piece, and the one that ties the geometry to the question of what can be known in advance.</span>
+        </a>
+      </li>
+      <li>
+        <a class="entry" href="https://onojk.github.io/reuse-and-the-wall/">
+          <span class="row"><span class="title">Reuse and the Wall</span><span class="kind">essay</span></span>
+          <span class="blurb">The three complexity-theory barriers — relativization, natural proofs, algebrization — read through a single lens of reuse and difficulty. Where the verify-easy / invert-hard asymmetry first gets named.</span>
+        </a>
+      </li>
+    </ul>
+
+    <h2><span class="h2-eyebrow">Research</span>The construction</h2>
+    <ul class="work">
+      <li>
+        <a class="entry" href="https://onojk.github.io/">
+          <span class="row"><span class="title">PrimeHelix</span><span class="kind">paper · Integers</span></span>
+          <span class="blurb">The distribution of semiprime factors expressed through an angular coordinate, θ = log(p)/log(n). Published in the journal <em>Integers</em>; the seed the later geometry grows from.</span>
+        </a>
+      </li>
+      <li>
+        <a class="entry" href="https://pypi.org/project/primehelix/">
+          <span class="row"><span class="title">primehelix</span><span class="kind">python package</span></span>
+          <span class="blurb">The PrimeHelix construction as code, on PyPI — for anyone who wants to run the angle on their own semiprimes. <span class="ext">pip install primehelix</span></span>
+        </a>
+      </li>
+      <li>
+        <a class="entry" href="https://github.com/onojk">
+          <span class="row"><span class="title">Source &amp; notebooks</span><span class="kind">github · onojk</span></span>
+          <span class="blurb">The repositories behind the essays and experiments — the gyre wheel, the gyre wave, the triangle constructions, and the dead-ends kept honestly alongside the results.</span>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Jonathan Kendall — San Diego · <a href="https://github.com/onojk">github.com/onojk</a><br>
+    rsacrack.com — a notebook on factoring, kept in the open.
+  </div>
+</footer>
+</body>
+</html>
