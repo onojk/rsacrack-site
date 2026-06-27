@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Coil and the Cut — rsacrack</title>
+<meta name="description" content="How public-key cryptography actually works, told as a coil with an invisible seam: the public coil anyone can hold, the two private coils that alone reveal where to cut, and why the product never points back to its factors.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1814; --ink-soft:#4a4640; --ink-faint:#7d776c;
+    --paper:#f6f2e9; --paper-deep:#efe9db; --line:#d9d1bf;
+    --kink:#b2401f; --turn:#2f5d63; --maxw:42rem;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Spectral",Georgia,serif;font-size:1.18rem;line-height:1.72;font-weight:400;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+
+  header.masthead{padding:5.5rem 0 0;margin-bottom:3.5rem}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);margin:0 0 1.4rem;}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:clamp(2.6rem,7vw,4.2rem);
+    line-height:1.02;letter-spacing:-.015em;margin:0 0 1.2rem;}
+  .standfirst{font-size:1.3rem;line-height:1.55;color:var(--ink-soft);font-style:italic;
+    max-width:35rem;margin:0 0 2.2rem;}
+  .byline{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.04em;
+    color:var(--ink-faint);border-top:1px solid var(--line);padding-top:1.1rem;}
+  .byline a{color:var(--turn);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  .byline a:hover{border-color:var(--turn)}
+
+  .kinkrule{display:block;width:100%;height:34px;margin:3rem 0;overflow:visible}
+  .kinkrule path{fill:none;stroke:var(--kink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+  main{padding-bottom:1rem}
+  p{margin:0 0 1.5rem}
+  main > .wrap > p:first-of-type::first-letter{font-family:"Fraunces",serif;font-weight:500;float:left;
+    font-size:4.6rem;line-height:.78;padding:.35rem .6rem 0 0;color:var(--kink);}
+  h2{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:1.9rem;line-height:1.12;
+    letter-spacing:-.01em;margin:3.4rem 0 1.3rem;color:var(--ink);}
+  .section-no{display:block;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.16em;
+    color:var(--kink);margin-bottom:.5rem;font-weight:500;}
+  em{font-style:italic}
+  strong{font-weight:500;color:var(--ink)}
+  code{font-family:"IBM Plex Mono",monospace;font-size:.9em;background:var(--paper-deep);
+    padding:.05em .35em;border-radius:3px;color:var(--kink);}
+
+  blockquote{margin:2.6rem 0;padding:0 0 0 1.4rem;border-left:2px solid var(--kink);
+    font-family:"Fraunces",serif;font-weight:400;font-size:1.5rem;line-height:1.32;color:var(--ink);}
+  blockquote p{margin:0}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:4px;margin:2.6rem 0;overflow:hidden}
+  .twocol .col{background:var(--paper-deep);padding:1.1rem 1.2rem}
+  .twocol .lbl{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;margin-bottom:.5rem}
+  .twocol .pub .lbl{color:var(--turn)}
+  .twocol .priv .lbl{color:var(--kink)}
+  .twocol .body{font-size:1rem;line-height:1.5;color:var(--ink-soft)}
+
+  .footnote{font-size:.95rem;line-height:1.55;color:var(--ink-faint);font-style:italic;
+    margin:2.4rem 0 0;padding-top:1.4rem;border-top:1px solid var(--line)}
+
+  footer{margin-top:4rem;border-top:1px solid var(--line);padding:2.2rem 0 5rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.76rem;line-height:1.7;color:var(--ink-faint);letter-spacing:.02em;}
+  footer a{color:var(--turn);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  footer a:hover{border-color:var(--turn)}
+
+  @media (max-width:560px){
+    body{font-size:1.08rem}
+    header.masthead{padding-top:3.5rem}
+    .standfirst{font-size:1.15rem}
+    .twocol{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .kinkrule path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.4s ease-out forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">How the lock works</p>
+    <h1>The coil and the cut</h1>
+    <p class="standfirst">Picture the public key as a seamless coil. Anyone may hold it. Only the holder of two private coils knows where to cut — and the cut is the whole secret.</p>
+    <p class="byline">Jonathan Kendall · a companion to <a href="/secret/">The Secret Is Two Primes</a></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <p>Most explanations of public-key cryptography reach for keys and locks, which is fine until you ask the obvious question — if everyone can see the lock, why can't they open it? Here is a picture that answers that question honestly. Imagine the public number — the product of two secret primes — as a long coil of wire, wound and joined into one seamless loop. To make it, you took two shorter coils, one of length <code>p</code> and one of length <code>q</code>, and welded them together at a single point. That weld is a kink. And the security of the whole system is one fact about that kink: <strong>once the weld is made, the seam is invisible.</strong></p>
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,17 L120,17 L150,4 L180,30 L210,17 L600,17"/>
+    </svg>
+
+    <h2><span class="section-no">I</span>The seamless coil</h2>
+
+    <p>Hand the coil to anyone. Hand it to your adversary. There is nothing to hide in the coil itself — it is the public key, made to be shared. Let them turn it over in their hands, measure it, examine every inch. They will not find the weld, because a clean weld leaves no seam. The coil is one smooth loop, and the single point where <code>p</code> ends and <code>q</code> begins looks exactly like every other point along it.</p>
+
+    <p>So if someone wanted to take it apart — to recover the two pieces it was made from — they would have to cut it. And to cut it correctly, they would have to snip at the exact kink, the one invisible point where the weld is. Snip anywhere else and the coil falls into two pieces that are not <code>p</code> and <code>q</code>, that multiply back to nothing meaningful. There is no mark to aim for, no bump under the fingers, no warmth as the blade nears the right spot. Just a seamless loop and one unmarked point that matters. To cut it apart by guessing, you would have to be impossibly lucky — and impossibly lucky, across a coil this long, means never.</p>
+
+    <blockquote><p>The weld is invisible to everyone — including, if they ever lost the measurement, the person who made it.</p></blockquote>
+
+    <p>That last point is the one that makes this honest, and it is worth dwelling on. Your power over the coil is not better eyesight. You cannot <em>see</em> the seam any more than your adversary can. If you forgot where you welded it, you would be as lost as they are, snipping blind. The seam is not a feature of the coil. It is a fact you have to <em>remember</em>.</p>
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,17 L100,17 L128,5 L156,29 L184,8 L212,26 L240,17 L600,17"/>
+    </svg>
+
+    <h2><span class="section-no">II</span>The two coils that tell you where to cut</h2>
+
+    <p>So what lets you cut where no one else can? Not the coil in front of you — the two coils in your other hand. You still hold the original <code>p</code>-coil and <code>q</code>-coil, the two pieces you welded together. And <em>they</em> tell you where the seam is. Lay the <code>p</code>-coil against the public loop, measure off its length, and your blade is at the weld — exactly, every time, no luck involved. To know <code>p</code> is to know where to cut. The two private coils are the map to the invisible seam, and holding the map is the entire secret.</p>
+
+    <div class="twocol">
+      <div class="col pub">
+        <div class="lbl">The public coil — N</div>
+        <div class="body">Give it to anyone. The seam is invisible, so sharing it reveals nothing. It is the lock everyone may hold and no one can open.</div>
+      </div>
+      <div class="col priv">
+        <div class="lbl">The private coils — p and q</div>
+        <div class="body">Yours alone. Holding them tells you where the weld is. They are not in the public coil; they are the saved measurement of where to cut it.</div>
+      </div>
+    </div>
+
+    <p>This is the whole shape of a private key. It is not a feature hidden somewhere inside the public number, waiting to be found by anyone clever enough. It is a separate thing you kept — the two pieces, the measurement, the note that says <em>here is the seam.</em> Anyone may hold the lock. Only you hold the map. And the map points only one way.</p>
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,17 L80,17 L104,6 L128,28 L152,9 L176,25 L200,11 L224,23 L248,17 L600,17"/>
+    </svg>
+
+    <h2><span class="section-no">III</span>Why it only points one way</h2>
+
+    <p>Here is the asymmetry that holds everything up. The two private coils tell you where to cut the public one — that direction works, instantly. But the public coil does <em>not</em> tell you where the two private coils are. You can examine <code>N</code> all you like; it will not point back to <code>p</code> and <code>q</code>, because the welding kept no record of the seam. The pieces point to the product; the product never points back to the pieces.</p>
+
+    <p>And so the lock holds in plain sight. Anyone can verify a cut once it is made — snip the coil into two pieces, multiply them, and check that they rejoin into <code>N</code>; that is easy, anyone can do it. What no one can do, without already holding the private coils, is <em>find</em> the cut in the first place. Easy to check, impossible to find. The public coil is given freely to the world precisely because the seam is invisible without the map — and only you hold the map.</p>
+
+    <blockquote><p>The product points to the lock. Only the factors point to the cut. And the factors are the one thing the product will never give back.</p></blockquote>
+
+    <p>That is public-key cryptography, with nothing left out. A seamless coil anyone may hold, an invisible weld no one can see, two private coils that alone reveal where to cut, and a product that — however long you turn it over — never tells you where its own seam is. You can give the lock to everyone because the secret was never in the lock. It was always in the map, and the map only ever pointed one way.</p>
+
+    <p class="footnote">A note on the picture: this describes the structure of <code>RSA</code> specifically, where the public number is a product of two secret primes. The coil is a way to <em>see</em> why a public key can be shared safely — it is faithful to how the real thing works, not a new scheme. The same one-way shape underlies other systems too, built from different operations; what stays constant is that the public value never points back to the private one. And as elsewhere on this site: the hardness of finding the cut is trusted because it has survived sustained attack, not because anyone has proved it — which is why the move to quantum-resistant locks is already underway.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="/">← rsacrack</a> · companion to <a href="/secret/">The Secret Is Two Primes</a>, <a href="/forge/">Storage and the Forge</a>, and <a href="https://theroom.rsacrack.com">The Room You Walk Into</a><br>
+    Jonathan Kendall — San Diego · <a href="https://github.com/onojk">github.com/onojk</a>
+  </div>
+</footer>
+</body>
+</html>
