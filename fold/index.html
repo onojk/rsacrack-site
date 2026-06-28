@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Fold and the Gyre — rsacrack</title>
+<meta name="description" content="A secret is something with an interior. Flattening a wound spiral collapses that interior — and the line you folded along is the only thing that reopens it. How a fold becomes the shape of a one-way function, and why the winding number is the secret.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1814; --ink-soft:#4a4640; --ink-faint:#7d776c;
+    --paper:#f6f2e9; --paper-deep:#efe9db; --line:#d9d1bf;
+    --kink:#b2401f; --turn:#2f5d63; --maxw:42rem;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Spectral",Georgia,serif;font-size:1.18rem;line-height:1.72;font-weight:400;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+
+  header.masthead{padding:5.5rem 0 0;margin-bottom:3.5rem}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);margin:0 0 1.4rem;}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:clamp(2.6rem,7vw,4.2rem);
+    line-height:1.02;letter-spacing:-.015em;margin:0 0 1.2rem;}
+  .standfirst{font-size:1.3rem;line-height:1.55;color:var(--ink-soft);font-style:italic;
+    max-width:35rem;margin:0 0 2.2rem;}
+  .byline{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.04em;
+    color:var(--ink-faint);border-top:1px solid var(--line);padding-top:1.1rem;}
+  .byline a{color:var(--turn);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  .byline a:hover{border-color:var(--turn)}
+
+  .kinkrule{display:block;width:100%;height:34px;margin:3rem 0;overflow:visible}
+  .kinkrule path{fill:none;stroke:var(--kink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+  main{padding-bottom:1rem}
+  p{margin:0 0 1.5rem}
+  main > .wrap > p:first-of-type::first-letter{font-family:"Fraunces",serif;font-weight:500;float:left;
+    font-size:4.6rem;line-height:.78;padding:.35rem .6rem 0 0;color:var(--kink);}
+  h2{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:1.9rem;line-height:1.12;
+    letter-spacing:-.01em;margin:3.4rem 0 1.3rem;color:var(--ink);}
+  .section-no{display:block;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.16em;
+    color:var(--kink);margin-bottom:.5rem;font-weight:500;}
+  em{font-style:italic}
+  strong{font-weight:500;color:var(--ink)}
+  code{font-family:"IBM Plex Mono",monospace;font-size:.9em;background:var(--paper-deep);
+    padding:.05em .35em;border-radius:3px;color:var(--kink);}
+
+  blockquote{margin:2.6rem 0;padding:0 0 0 1.4rem;border-left:2px solid var(--kink);
+    font-family:"Fraunces",serif;font-weight:400;font-size:1.5rem;line-height:1.32;color:var(--ink);}
+  blockquote p{margin:0}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:4px;margin:2.6rem 0;overflow:hidden}
+  .twocol .col{background:var(--paper-deep);padding:1.1rem 1.2rem}
+  .twocol .lbl{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;margin-bottom:.5rem}
+  .twocol .pub .lbl{color:var(--turn)}
+  .twocol .priv .lbl{color:var(--kink)}
+  .twocol .body{font-size:1rem;line-height:1.5;color:var(--ink-soft)}
+
+  .footnote{font-size:.95rem;line-height:1.55;color:var(--ink-faint);font-style:italic;
+    margin:2.4rem 0 0;padding-top:1.4rem;border-top:1px solid var(--line)}
+
+  footer{margin-top:4rem;border-top:1px solid var(--line);padding:2.2rem 0 5rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.76rem;line-height:1.7;color:var(--ink-faint);letter-spacing:.02em;}
+  footer a{color:var(--turn);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  footer a:hover{border-color:var(--turn)}
+
+  @media (max-width:560px){
+    body{font-size:1.08rem}
+    header.masthead{padding-top:3.5rem}
+    .standfirst{font-size:1.15rem}
+    .twocol{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .kinkrule path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.4s ease-out forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">The shape of a one-way street</p>
+    <h1>The fold and the gyre</h1>
+    <p class="standfirst">A secret is something with an interior. Flatten a wound spiral and the interior collapses — and the line you folded along is the only thing that reopens it.</p>
+    <p class="byline">Jonathan Kendall · a companion to <a href="/coil/">The Coil and the Cut</a> and <a href="/forge/">Storage and the Forge</a></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <p>Start with a wound spiral — a gyre — standing up in its full height, each turn riding above the last. It has an inside. Run your eye along it and you can say not just <em>where</em> a point sits on the circle, but <em>how many times around</em> the spiral had gone to put it there. That winding count is held in the spiral's interior, in the space between the turns. Now press the whole thing flat, down its own axis. The turns slam together. Every point still lands somewhere on the circle — but the question <em>which turn did it come from</em> has no answer anymore, because all the turns are superimposed. You have flattened the gyre, and in flattening it you have thrown one thing away: the winding. The shape is all still there. The interior is gone.</p>
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,17 L120,17 L150,4 L180,30 L210,17 L600,17"/>
+    </svg>
+
+    <h2><span class="section-no">I</span>A secret needs an interior</h2>
+
+    <p>This is the quiet requirement under every lock. A thing can keep a secret only if it has an <em>inside</em> — a region the surface does not reveal. The product of two primes keeps its factors inside; the public number shows only the outside, the magnitude. A sealed coil keeps its weld inside; the loop shows only a seamless surface. In each case the secret lives in an interior, and the public face is a surface that does not betray it.</p>
+
+    <p>So the way to destroy a secret is not only to scramble it — it is to <em>collapse the interior altogether</em>, until there is no inside left for anything to hide in. Flattening the gyre does exactly this. Before the press it was a hollow, winding thing with depth between its turns. After, it is a single circle: pure surface, no interior, nowhere left to keep the winding. The flattened gyre cannot hold a secret, because it no longer has an inside to hold one in. Everything it is, it shows.</p>
+
+    <blockquote><p>To flatten the gyre is not to hide the winding. It is to evict it — to press out the very room the secret was kept in.</p></blockquote>
+
+    <h2><span class="section-no">II</span>The line you folded along</h2>
+
+    <p>And yet the winding is not gone for <em>you</em> — if you kept one thing. The flattening happened along an axis, a fold-line, and that line is the single piece of information the collapse threw away: it records how the turns were stacked, which point came from which lap. Keep the fold-line and you can re-open the spiral in one motion — unfold along it, and every superimposed point springs back to its own turn, the interior restored. Lose the fold-line and you cannot. The flat circle alone is consistent with countless windings; nothing in the surface tells you which one was real. To recover it you would have to build the gyre over again from the beginning, with no guarantee of arriving at the same one.</p>
+
+    <p>So the fold-line is the whole asymmetry. It is cheap to fold — anyone can press a spiral flat. It is cheap to <em>unfold</em> if you hold the line you folded along. And it is the wall to unfold if you do not, because the flattened surface does not contain the way back. The line is small; what it controls is vast. Hand someone the flat circle and they hold the public thing. Keep the fold-line and you hold the private one.</p>
+
+    <div class="twocol">
+      <div class="col pub">
+        <div class="lbl">The flattened gyre</div>
+        <div class="body">Give it to anyone. All surface, no interior — the winding is collapsed and the circle reveals none of it. Holding it teaches nothing about how to re-open it.</div>
+      </div>
+      <div class="col priv">
+        <div class="lbl">The fold-line</div>
+        <div class="body">Yours alone. It records the axis the spiral was pressed along — the one discarded fact that unfolds the circle back into its full winding, instantly.</div>
+      </div>
+    </div>
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,17 L100,17 L128,5 L156,29 L184,8 L212,26 L240,17 L600,17"/>
+    </svg>
+
+    <h2><span class="section-no">III</span>The winding is the secret</h2>
+
+    <p>This is not only a picture. The thing the flattening forgets — <em>how many times around</em> — is, named plainly, a logarithm: the exponent that says how far the spiral was wound to reach a given point. Going forward is easy: wind the spiral, read off where you land. Going back is the wall: given only where you landed, recover how many turns put you there. That backward question — recover the winding from the position — is one of the genuine one-way problems, and it is the wall beneath much of modern cryptography, the elliptic-curve keys included. The forward winding is a few cheap steps. The backward unwinding, without the fold-line, is the search no one can finish.</p>
+
+    <p>So the fold and the gyre are one axis read two ways. Wind <em>up</em> and you build the structure, turn over turn, the interior filling with depth — this is the constructive direction, the easy one. Press <em>down</em> and you collapse it, the turns superimposing, the interior pressed out — this is the destructive direction, easy to do and hard to undo. The secret is the same thing throughout: the winding, the count of turns, the exponent the flattening forgot. Keep the line you folded along and it is one motion to recover. Hold only the flat circle and it is the wall.</p>
+
+    <blockquote><p>Wind up to make it. Fold down to hide it. The secret was always the same — how many times around — and the surface that remembers your position has forgotten your turning.</p></blockquote>
+
+    <p>That is the whole shape, and it is older than any cipher. A spiral standing up has an inside; flattened, it has none. The information that filled the inside — the winding — does not vanish into nothing, but it leaves the surface entirely, recoverable only by the one who kept the fold-line. Everyone may hold the flat circle. Only you, holding the line you pressed it along, can lift it back into the spiral it was. The fold is the gyre laid down; the secret is the turning the laying-down forgot; and the fold-line is the small kept thing that tells the surface, again, how to rise.</p>
+
+    <p class="footnote">A note, in the spirit of this site: this describes the <em>shape</em> of a one-way function — the structure shared by the discrete-logarithm problem and the public-key systems built on it — not a scheme to be used. A literal geometric fold is not itself secure; pressed flat along a single visible axis, the fold-line is plain to see. The wall in real systems comes from the arithmetic that hides the winding, or from many such collapses composed until the way back is genuinely lost. As elsewhere here, the hardness is trusted because it has withstood sustained attack, not because anyone has proved no shortcut exists — which is why the move toward quantum-resistant locks is already underway.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="/">← rsacrack</a> · companion to <a href="/coil/">The Coil and the Cut</a>, <a href="/secret/">The Secret Is Two Primes</a>, <a href="/forge/">Storage and the Forge</a>, and <a href="https://theroom.rsacrack.com">The Room You Walk Into</a><br>
+    Jonathan Kendall — San Diego · <a href="https://github.com/onojk">github.com/onojk</a>
+  </div>
+</footer>
+</body>
+</html>
