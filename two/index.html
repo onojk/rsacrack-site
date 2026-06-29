@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why the Wall Lives at Two — rsacrack</title>
+<meta name="description" content="A line keeps no secret, a box keeps a poor one. The factoring wall lives at exactly two factors — and a clock built from prime-edged triangles shows why concentration in two primes, not spread across many, is where the strength is.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1814; --ink-soft:#4a4640; --ink-faint:#7d776c;
+    --paper:#f6f2e9; --paper-deep:#efe9db; --line:#d9d1bf;
+    --kink:#b2401f; --turn:#2f5d63; --maxw:42rem;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Spectral",Georgia,serif;font-size:1.18rem;line-height:1.72;font-weight:400;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+
+  header.masthead{padding:5.5rem 0 0;margin-bottom:3.5rem}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);margin:0 0 1.4rem;}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:clamp(2.6rem,7vw,4.2rem);
+    line-height:1.02;letter-spacing:-.015em;margin:0 0 1.2rem;}
+  .standfirst{font-size:1.3rem;line-height:1.55;color:var(--ink-soft);font-style:italic;
+    max-width:35rem;margin:0 0 2.2rem;}
+  .byline{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.04em;
+    color:var(--ink-faint);border-top:1px solid var(--line);padding-top:1.1rem;}
+  .byline a{color:var(--turn);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  .byline a:hover{border-color:var(--turn)}
+
+  .kinkrule{display:block;width:100%;height:34px;margin:3rem 0;overflow:visible}
+  .kinkrule path{fill:none;stroke:var(--kink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+  main{padding-bottom:1rem}
+  p{margin:0 0 1.5rem}
+  main > .wrap > p:first-of-type::first-letter{font-family:"Fraunces",serif;font-weight:500;float:left;
+    font-size:4.6rem;line-height:.78;padding:.35rem .6rem 0 0;color:var(--kink);}
+  h2{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:1.9rem;line-height:1.12;
+    letter-spacing:-.01em;margin:3.4rem 0 1.3rem;color:var(--ink);}
+  .section-no{display:block;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.16em;
+    color:var(--kink);margin-bottom:.5rem;font-weight:500;}
+  em{font-style:italic}
+  strong{font-weight:500;color:var(--ink)}
+  code{font-family:"IBM Plex Mono",monospace;font-size:.9em;background:var(--paper-deep);
+    padding:.05em .35em;border-radius:3px;color:var(--kink);}
+
+  blockquote{margin:2.6rem 0;padding:0 0 0 1.4rem;border-left:2px solid var(--kink);
+    font-family:"Fraunces",serif;font-weight:400;font-size:1.5rem;line-height:1.32;color:var(--ink);}
+  blockquote p{margin:0}
+
+  .ladder{margin:2.6rem 0;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .ladder .rung{display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:1rem 1.2rem;
+    background:var(--paper-deep);border-bottom:1px solid var(--line);align-items:baseline}
+  .ladder .rung:last-child{border-bottom:none}
+  .ladder .dim{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.08em;
+    color:var(--kink);white-space:nowrap;padding-top:.15rem}
+  .ladder .what{font-size:1rem;line-height:1.5}
+  .ladder .what b{font-weight:500;font-family:"Fraunces",serif}
+  .ladder .rung.strong{background:#eef3ee}
+  .ladder .rung.strong .dim{color:var(--turn)}
+
+  .footnote{font-size:.95rem;line-height:1.55;color:var(--ink-faint);font-style:italic;
+    margin:2.4rem 0 0;padding-top:1.4rem;border-top:1px solid var(--line)}
+
+  footer{margin-top:4rem;border-top:1px solid var(--line);padding:2.2rem 0 5rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.76rem;line-height:1.7;color:var(--ink-faint);letter-spacing:.02em;}
+  footer a{color:var(--turn);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  footer a:hover{border-color:var(--turn)}
+
+  @media (max-width:560px){
+    body{font-size:1.08rem}
+    header.masthead{padding-top:3.5rem}
+    .standfirst{font-size:1.15rem}
+    .ladder .rung{grid-template-columns:1fr;gap:.3rem}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .kinkrule path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.4s ease-out forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">The sweet spot of secrecy</p>
+    <h1>Why the wall lives at two</h1>
+    <p class="standfirst">A line keeps no secret; a box keeps a poor one. The factoring wall stands at exactly two factors — and strength turns out to be concentration, not spread.</p>
+    <p class="byline">Jonathan Kendall · a companion to <a href="/coil/">The Coil and the Cut</a> and <a href="/fold/">The Fold and the Gyre</a></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <p>A number can be thought of as a shape with a certain area, or volume — and the way it factors is the way it can be laid out. A prime can only be laid as a single line: one row, no rectangle, nothing to hide. A product of two primes lays out as a rectangle, two sides; a product of three lays out as a box, three sides. Climb that ladder of dimensions and a curious thing happens to secrecy. It does not grow with the dimensions. It peaks in the middle — at two — and then it falls. The strongest lock is not the richest shape. It is the rectangle.</p>
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <title>A rule that kinks only at the prime numbers, thinning as they do</title>
+      <path d="M0,17 L12.9,17 L16.9,7 L20.9,27 L23.9,17 L38.3,17 L42.3,7 L46.3,27 L49.3,17 L55.2,17 L59.2,27 L63.2,7 L66.2,17 L89.0,17 L93.0,7 L97.0,27 L100.0,17 L105.9,17 L109.9,27 L113.9,7 L116.9,17 L139.7,17 L143.7,7 L147.7,27 L150.7,17 L156.6,17 L160.6,27 L164.6,7 L167.6,17 L190.4,17 L194.4,7 L198.4,27 L201.4,17 L241.1,17 L245.1,27 L249.1,7 L252.1,17 L258.0,17 L262.0,7 L266.0,27 L269.0,17 L308.7,17 L312.7,27 L316.7,7 L319.7,17 L342.5,17 L346.5,7 L350.5,27 L353.5,17 L359.4,17 L363.4,27 L367.4,7 L370.4,17 L393.2,17 L397.2,7 L401.2,27 L404.2,17 L443.9,17 L447.9,27 L451.9,7 L454.9,17 L494.6,17 L498.6,7 L502.6,27 L505.6,17 L511.5,17 L515.5,27 L519.5,7 L522.5,17 L562.2,17 L566.2,7 L570.2,27 L573.2,17 L600,17"/>
+    </svg>
+
+    <h2><span class="section-no">I</span>The ladder of dimensions</h2>
+
+    <p>Lay the shapes out by how many primes built them, and the pattern is plain. One prime: a line, the trivial factorization every number shares, hiding nothing. Two primes: a rectangle, whose two sides are concealed in its area — to find them is to factor, and that is the wall. Three primes: a box, whose three edges are concealed in its volume — richer, with more structure, and yet <em>easier</em> to take apart.</p>
+
+    <div class="ladder">
+      <div class="rung">
+        <div class="dim">1 factor · line</div>
+        <div class="what"><b>Prime.</b> Lays out only as a single row. There is no other side to hide, so it keeps no secret at all.</div>
+      </div>
+      <div class="rung strong">
+        <div class="dim">2 factors · rectangle</div>
+        <div class="what"><b>Semiprime.</b> Two sides concealed in one area. Recovering them is factoring — the wall. This rung is the strongest.</div>
+      </div>
+      <div class="rung">
+        <div class="dim">3 factors · box</div>
+        <div class="what"><b>Three primes.</b> Three edges in one volume — richer structure, but the factors are necessarily smaller, and smaller factors fall sooner.</div>
+      </div>
+    </div>
+
+    <p>The fall from two to three is the surprising part, and the reason is simple once seen. For a number of a given size, splitting it into <em>more</em> factors means each factor is <em>smaller</em>. And smaller factors are easier to find — the methods that search for a factor reach a small one quickly. A box of three primes hands an attacker more places to grab, and each grip is closer to hand. The rectangle, with only two factors and no smaller one to seize, gives nothing away early. More dimensions dilute; two concentrate.</p>
+
+    <blockquote><p>Strength is not richness. A box holds more structure than a rectangle and guards it worse, because its factors are smaller and a small factor is a door.</p></blockquote>
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <title>The same prime rule, kinks thinning toward the right</title>
+      <path d="M0,17 L21.4,17 L25.4,7 L29.4,27 L32.4,17 L38.3,17 L42.3,27 L46.3,7 L49.3,17 L55.2,17 L59.2,7 L63.2,27 L66.2,17 L89.0,17 L93.0,27 L97.0,7 L100.0,17 L105.9,17 L109.9,7 L113.9,27 L116.9,17 L139.7,17 L143.7,27 L147.7,7 L150.7,17 L156.6,17 L160.6,7 L164.6,27 L167.6,17 L190.4,17 L194.4,27 L198.4,7 L201.4,17 L241.1,17 L245.1,7 L249.1,27 L252.1,17 L258.0,17 L262.0,27 L266.0,7 L269.0,17 L308.7,17 L312.7,7 L316.7,27 L319.7,17 L342.5,17 L346.5,27 L350.5,7 L353.5,17 L359.4,17 L363.4,7 L367.4,27 L370.4,17 L393.2,17 L397.2,27 L401.2,7 L404.2,17 L443.9,17 L447.9,7 L451.9,27 L454.9,17 L494.6,17 L498.6,27 L502.6,7 L505.6,17 L511.5,17 L515.5,7 L519.5,27 L522.5,17 L562.2,17 L566.2,27 L570.2,7 L573.2,17 L600,17"/>
+    </svg>
+
+    <h2><span class="section-no">II</span>A clock of triangles</h2>
+
+    <p>Here is a way to watch the ladder move. Imagine a clock that does not tick along a line but draws a figure each beat. Give it two hands, one climbing the primes along the base, one climbing the primes along the height; each tick lays down a triangle whose two edges are primes, and the half-base-times-height flattens it to an area. That area is half a semiprime — and to recover which base and which height made it is, once again, to factor. The clock ticks out a stream of little walls.</p>
+
+    <p>Run the two hands at the <em>same</em> rate and the triangles stay near-balanced — base and height close in size, the strong case, a near-square area that gives no small factor away. Run one hand faster and the triangle skews into a long thin sliver: one prime races ahead, the other lags small, and the small one is the door. The ratio of the two rates is a dial straight onto the strength — balanced and hard at one extreme, lopsided and easy at the other. It is the spread between the two factors, made into a knob.</p>
+
+    <p>Now add a third hand — a height in depth, a third prime climbing — and the triangle becomes a box. The flattened volume is a product of three primes, and the wall, just as the ladder warned, gets <em>weaker</em>. But the same control reverses it: freeze the third hand, and the box truncates back toward a slab; freeze it all the way down, and the box collapses to the triangle, the volume back to two factors, the wall strong again. The strength was in flattening the third dimension away — in refusing the box and keeping the rectangle.</p>
+
+    <blockquote><p>Freeze the third dimension to nothing and the box falls back to the triangle. The lock is strongest where the shape is flattest — two primes, concentrated, with no third edge to dilute them.</p></blockquote>
+
+    <svg class="kinkrule" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+      <title>The prime rule once more</title>
+      <path d="M0,17 L12.9,17 L16.9,7 L20.9,27 L23.9,17 L38.3,17 L42.3,7 L46.3,27 L49.3,17 L55.2,17 L59.2,27 L63.2,7 L66.2,17 L89.0,17 L93.0,7 L97.0,27 L100.0,17 L105.9,17 L109.9,27 L113.9,7 L116.9,17 L139.7,17 L143.7,7 L147.7,27 L150.7,17 L156.6,17 L160.6,27 L164.6,7 L167.6,17 L190.4,17 L194.4,7 L198.4,27 L201.4,17 L241.1,17 L245.1,27 L249.1,7 L252.1,17 L258.0,17 L262.0,7 L266.0,27 L269.0,17 L308.7,17 L312.7,27 L316.7,7 L319.7,17 L342.5,17 L346.5,7 L350.5,27 L353.5,17 L359.4,17 L363.4,27 L367.4,7 L370.4,17 L393.2,17 L397.2,7 L401.2,27 L404.2,17 L443.9,17 L447.9,27 L451.9,7 L454.9,17 L494.6,17 L498.6,7 L502.6,27 L505.6,17 L511.5,17 L515.5,27 L519.5,7 L522.5,17 L562.2,17 L566.2,7 L570.2,27 L573.2,17 L600,17"/>
+    </svg>
+
+    <h2><span class="section-no">III</span>Concentration, not spread</h2>
+
+    <p>This is why real keys are built the way they are. A working modulus is a product of <em>two</em> primes, both large, both near the same size — not three, not many, and not one large and one small. Two, because one keeps no secret and three keeps a poorer one. The same size, because a balanced rectangle hands over no small factor; lean it into a sliver and the short side gives it away. The whole craft of choosing a key is the craft of landing on the strong rung and staying balanced on it.</p>
+
+    <p>So the lesson the ladder teaches, and the clock of triangles shows in motion, is a single quiet rule about where strength lives: <strong>not in how much structure you pile up, but in how tightly you concentrate it.</strong> Spread a secret across many factors and you have only made many small doors. Press it into two large ones, balanced and equal, and you have the rectangle — the one shape on the ladder that gives nothing away early and nothing away balanced. The wall lives at two, because two is where the secret is concentrated and not yet diluted. Below it there is no secret; above it the secret leaks. The rectangle is the knife's edge between, and that is exactly where the lock is built.</p>
+
+    <p class="footnote">A note, in the spirit of this site: the rungs of this ladder are a way to <em>see</em> a fact about ordinary integer factorization — that two roughly equal prime factors are harder to recover than one, three, or an unbalanced pair — which is why real <code>RSA</code> moduli are two large balanced primes. The triangle clock is an illustration of that fact, not a new scheme; its ticks are ordinary semiprimes and inherit the ordinary wall. And as elsewhere here, that wall is trusted because it has withstood sustained attack, not because anyone has proved no shortcut exists — which is why the move toward quantum-resistant locks is already underway.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="/">← rsacrack</a> · companion to <a href="/coil/">The Coil and the Cut</a>, <a href="/fold/">The Fold and the Gyre</a>, <a href="/secret/">The Secret Is Two Primes</a>, and <a href="/forge/">Storage and the Forge</a><br>
+    Jonathan Kendall — San Diego · <a href="https://github.com/onojk">github.com/onojk</a>
+  </div>
+</footer>
+</body>
+</html>
