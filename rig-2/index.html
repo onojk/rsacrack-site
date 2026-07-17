@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rig 2: A Lock Seen From the Wrong Side</title>
+<meta name="description" content="A geometric construction on the circle of perimeter N = pq: an inscribed triangle whose angles, tilings, offsets, and straightening ratios each convert one prime factor into the other — and why none of it lowers the wall.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1020; --chalk:#e8e4d8; --dim:#5a627a; --faint:#232a3c;
+    --mint:#7FE8C3; --ember:#FF6B5A; --amber:#f2a444; --teal:#4fd6c5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ink);color:var(--chalk);
+    font-family:'Spectral',Georgia,serif;font-size:18px;line-height:1.72}
+  .wrap{max-width:720px;margin:0 auto;padding:56px 20px 96px}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--dim)}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(30px,6vw,44px);
+    line-height:1.12;margin:.35em 0 .2em}
+  .dek{font-style:italic;color:#a8b0c4;font-size:19px;margin:0 0 2.4em}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:24px;margin:2.2em 0 .5em}
+  p{margin:0 0 1.15em}
+  em{color:#c7cee0}
+  strong{color:var(--chalk)}
+  .mono{font-family:'IBM Plex Mono',monospace;font-size:.92em}
+  .yes{color:var(--ember)} .no{color:var(--mint)}
+  .pcol{color:var(--amber)} .qcol{color:var(--teal)}
+  .eq{font-family:'IBM Plex Mono',monospace;font-size:16px;text-align:center;
+    color:var(--chalk);background:var(--faint);border-radius:6px;
+    padding:14px 12px;margin:1.3em 0;overflow-x:auto}
+  figure{margin:2em 0}
+  figcaption{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--dim);
+    margin-top:.7em;line-height:1.5}
+  svg{width:100%;height:auto;display:block}
+  .rule{border:none;border-top:1px solid var(--faint);margin:2.6em 0}
+  table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;
+    font-size:14px;margin:1.4em 0}
+  th,td{text-align:right;padding:7px 10px;border-bottom:1px solid var(--faint)}
+  th{color:var(--dim);font-weight:400;letter-spacing:.06em}
+  td:first-child,th:first-child{text-align:left}
+  .close{font-family:'Fraunces',serif;font-style:italic;font-size:22px;line-height:1.5;
+    color:var(--chalk);border-left:3px solid var(--mint);padding-left:20px;margin:2.4em 0}
+  a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(79,214,197,.35)}
+  a:hover{border-bottom-color:var(--teal)}
+  .foot{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--dim);margin-top:3.5em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="eyebrow">rig 2 · the circle scenario, continued</div>
+<h1>A Lock Seen From the Wrong Side</h1>
+<p class="dek">A triangle inscribed in the public circle stores the private factorization four different ways at once. None of them can be read from the rim. That is not a defect of the construction — it is the construction's finding.</p>
+
+<p>Start where the circle scenario left off. You live on a circle whose perimeter is <span class="mono">N&nbsp;=&nbsp;p·q</span>, the product of two secret primes. The perimeter is public. The rim is perfectly smooth: rotationally symmetric, no marked point, no address. Everything below is a construction you could carry out <em>if you held the factors</em> — a rig built from the private side of the wall. The point of building it is to see, with mechanical clarity, exactly what the key does. Watching the gears will not turn them.</p>
+
+<h2>The build</h2>
+
+<p>Lay two arcs on the track: one of length <span class="pcol">p</span>, one of length <span class="qcol">q</span>. Join each arc's endpoints with a straight chord through the interior. Now let the track be frictionless and turn gravity on: each arc slides until its midpoint hangs at the lowest point, so both come to rest centered on the bottom, the smaller nested inside the larger, chords hanging horizontal like two water levels.</p>
+
+<p>Then the move that makes it a rig. Lock <span class="qcol">q</span> in place. Slide <span class="pcol">p</span> up to the right until the two arcs share their right-side endpoint — flush right, all of q's overhang pushed to the left. The two chords now sprout from a single shared point. Close the figure: connect the two far endpoints with a third chord. Three vertices, each resting on the inside of the circle. An inscribed triangle.</p>
+
+<figure>
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rig 2: inscribed triangle from two flush-right arcs on the circle of perimeter N">
+  <circle cx="320" cy="150" r="128" fill="none" stroke="#232a3c" stroke-width="9"/>
+  <!-- q arc: shared (154.3°) → q far (205.7°) -->
+  <path d="M 375.5 265.3 A 128 128 0 0 1 264.5 265.3" fill="none" stroke="#4fd6c5" stroke-width="11" stroke-opacity="0.5"/>
+  <!-- p arc flush right: shared (154.3°) → p far (187.0°) -->
+  <path d="M 375.5 265.3 A 128 128 0 0 1 304.4 277.0" fill="none" stroke="#f2a444" stroke-width="11" stroke-opacity="0.55"/>
+  <!-- triangle -->
+  <polygon points="375.5,265.3 304.4,277.0 264.5,265.3" fill="#e8e4d8" fill-opacity="0.08"/>
+  <line x1="375.5" y1="265.3" x2="304.4" y2="277.0" stroke="#f2a444" stroke-width="2" stroke-dasharray="6 5"/>
+  <line x1="375.5" y1="265.3" x2="264.5" y2="265.3" stroke="#4fd6c5" stroke-width="2" stroke-dasharray="6 5"/>
+  <line x1="304.4" y1="277.0" x2="264.5" y2="265.3" stroke="#e8e4d8" stroke-width="2.2"/>
+  <circle cx="375.5" cy="265.3" r="6" fill="none" stroke="#e8e4d8" stroke-width="2"/>
+  <circle cx="375.5" cy="265.3" r="2.2" fill="#e8e4d8"/>
+  <circle cx="304.4" cy="277.0" r="3" fill="#e8e4d8"/>
+  <circle cx="264.5" cy="265.3" r="3" fill="#e8e4d8"/>
+  <text x="392" y="288" font-family="IBM Plex Mono, monospace" font-size="12" fill="#e8e4d8">shared point</text>
+  <text x="304" y="302" font-family="IBM Plex Mono, monospace" font-size="12" fill="#f2a444" text-anchor="middle">p's far end</text>
+  <text x="248" y="252" font-family="IBM Plex Mono, monospace" font-size="12" fill="#4fd6c5" text-anchor="end">q's far end</text>
+  <text x="320" y="120" font-family="Fraunces, serif" font-style="italic" font-size="26" fill="#e8e4d8" text-anchor="middle">N = p·q</text>
+  <text x="320" y="146" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5a627a" text-anchor="middle">drawn for p = 7, q = 11</text>
+</svg>
+<figcaption>Fig. 1 — The rig at rest. Arc q locked at the bottom; arc p flush right; the shared endpoint; the closing side over the exposed q − p of track.</figcaption>
+</figure>
+
+<p>Everything in the build is elementary — a track, gravity, a slide, three pins. And the finished triangle stores the secret in every part of itself.</p>
+
+<h2>Angles made of reciprocals</h2>
+
+<p>Each corner is an inscribed angle: half the arc it faces across the circle. The corner at q's far endpoint faces the arc of length p, so it measures exactly <span class="mono">π/q</span>. The corner at p's far endpoint faces the long way around, arc <span class="mono">N − q</span>, so it measures <span class="mono">π − π/p</span>. And the shared point faces the exposed sliver of length <span class="mono">q − p</span>: the <em>blade</em>, of angle <span class="mono">π(1/p − 1/q)</span>.</p>
+
+<div class="eq">π/q &nbsp;+&nbsp; (π − π/p) &nbsp;+&nbsp; π(1/p − 1/q) &nbsp;=&nbsp; π</div>
+
+<p>The three angles contain nothing but the reciprocals of the primes — N never appears except through its factors. The <em>shape</em> of the triangle is set entirely by the pair (p, q); the circle only sets the zoom. And the shape degenerates exactly when factoring gets hard: as p and q approach √N, the blade closes and the triangle flattens toward a needle. Its area obeys a startling law — for balanced primes it converges to <span class="mono">(π/2)·(q − p)</span>, so every twin-prime semiprime, no matter how astronomically large, builds a rig of area approaching exactly <strong>π</strong>. A coin-sized triangle adrift in a disc whose area grows like N²/4π. The secret's geometric footprint does not scale with the secret.</p>
+
+<h2>The mod machine</h2>
+
+<p>The triangle's three sides give you three rulers: <span class="pcol">p</span>, <span class="qcol">q</span>, and <span class="mono">q − p</span>. Wrap any ruler around the track, end over end, starting at the shared point. Whole copies fit; eventually a gap remains that is shorter than the ruler. That leftover is the <em>partial</em> — and it is exactly <span class="mono">N mod s</span>, computed physically.</p>
+
+<p>The two factor-rulers close perfectly: p fits q times, q fits p times, zero remainder — <strong>closing with no partial is what being a divisor looks like</strong>. The blade ruler never closes. Its stub obeys a congruence: since q ≡ p (mod q − p), we get <span class="mono">N ≡ p² (mod q − p)</span> — and whenever p² &lt; q − p, the reduction does nothing and the white stub on the track is <em>literally p squared</em>. Set p = 3, q = 37: the leftover arc is 9 units long, the square of the small factor sitting in the clear on bare road.</p>
+
+<figure>
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wrapping the q-minus-p ruler around the track leaves a partial stub equal to p squared">
+  <circle cx="320" cy="150" r="118" fill="none" stroke="#232a3c" stroke-width="9"/>
+  <!-- N = 111 (p=3, q=37); ruler q-p = 34; three whole steps of 110.27deg from 120deg -->
+  <g stroke="#e8e4d8" fill="none" stroke-width="9">
+    <path d="M 422.2 209.0 A 118 118 0 0 1 229.2 225.4" stroke-opacity="0.18"/>
+    <path d="M 229.2 225.4 A 118 118 0 0 1 280.7 38.7"  stroke-opacity="0.34"/>
+    <path d="M 280.7 38.7 A 118 118 0 0 1 438.0 151.7"  stroke-opacity="0.18"/>
+  </g>
+  <!-- the partial: 29.2deg of track, length 9 = 3^2 -->
+  <path d="M 438.0 151.7 A 118 118 0 0 1 422.2 209.0" fill="none" stroke="#e8e4d8" stroke-width="13"/>
+  <circle cx="422.2" cy="209.0" r="5" fill="none" stroke="#e8e4d8" stroke-width="2"/>
+  <text x="404" y="234" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5a627a">start</text>
+  <text x="466" y="186" font-family="IBM Plex Mono, monospace" font-size="13" fill="#e8e4d8">partial = 9 = p&#178;</text>
+  <text x="320" y="130" font-family="Fraunces, serif" font-style="italic" font-size="22" fill="#e8e4d8" text-anchor="middle">111 = 3 &#215; 34 + 9</text>
+  <text x="320" y="156" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5a627a" text-anchor="middle">p = 3, q = 37 &#8212; ruler q &#8722; p = 34</text>
+  <text x="320" y="176" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5a627a" text-anchor="middle">r = p&#178; mod (q&#8722;p)</text>
+</svg>
+<figcaption>Fig. 2 &#8212; The blade ruler wrapped around the track for N = 111. Three whole steps of 34; the bright stub of length 9 is the partial &#8212; the square of the small factor, in the clear.</figcaption>
+</figure>
+
+<p>Iterate the mod — feed each stub back as the next ruler — and you are running the Euclidean algorithm on the rim. Here the rig shows its teeth. A common divisor of p and q − p would divide q; there is none. So <span class="mono">gcd(N, q − p) = 1</span>, always, and the blade-side cascade never halts early at a factor: it grinds all the way down to a stub of length one. The rig is rigged. The two sides that would confess close silently on the first pass and cannot be found; the one side whose size the geometry exposes is provably coprime to the perimeter and cannot confess.</p>
+
+<h2>The vertex that misses the grid</h2>
+
+<p>Rule the track in segments of length p, starting at the shared point. The shared point sits on a boundary by construction. The next vertex, at arc distance exactly p, sits on a boundary too — always. But the leftmost vertex sits at arc distance q, and q is never a multiple of p: <strong>it lands strictly inside a segment, and can never touch a boundary.</strong> Its offset past the boundary it just crossed is <span class="mono">q mod p</span>; for consecutive primes, Bertrand's postulate guarantees it lands in the segment <em>immediately</em> adjacent, at offset equal to the prime gap.</p>
+
+<p>That landing position is the opening move of Euclid. Take the offset as a new, finer segment length, ask where the old boundary lands inside it, and repeat: the sequence of landings is the continued fraction of q/p. The leftmost vertex is not merely off-grid — it is off-grid in a way that, unfolded, spells the entire arithmetic relationship between the two primes. And its refusal to snap to any grid built from the other factor, at every level of refinement until unit length, is the geometric witness of coprimality. The misfit is the message.</p>
+
+<h2>Straightening the hypotenuse</h2>
+
+<p>Take the long side — the chord from the shared point to q's far endpoint — and compare it to its own arc, rolled out flat like a piece of track unbent into a ruler. The rolled-out arc has length exactly <strong>q</strong>: an integer, standable, walkable. The chord beneath it comes up short, and the shortfall is where the other prime lives:</p>
+
+<div class="eq">chord / arc &nbsp;=&nbsp; sin(π/p) ÷ (π/p)</div>
+
+<p>The ratio depends on <em>p alone</em> — not on q, not on N — and the function is strictly monotonic, so it inverts exactly. One side of the triangle, measured twice — once curved, once straight — surrenders the complete factorization: the arc <em>is</em> q, and the ratio <em>encodes</em> p. The deficit's leading term is <span class="mono">π²q/6p²</span>, priced in the Basel constant ζ(2); and the bulge height between arc and chord converges, for balanced primes, to exactly <span class="mono">π/4</span> — another absolute constant pinned to the hard case, joining the area-π law. Curvature is the encryption. Straightening is the key you don't have: to unroll the arc you must know where it begins and ends, and those endpoints are the rig's private pins.</p>
+
+<h2>What the wall is</h2>
+
+<p>Every mechanism above has the same grammar. The blade angle gives you q − p — if you can locate the shared point, which takes a factor. The stub displays p² — if you know to step by q − p, which takes both. The grid offset spells q mod p — if you can rule the track in p-lengths, which takes p. The straightening ratio inverts to p — if you can unroll the arc, which takes its endpoints, which takes q. Four locks, and each turns beautifully <em>when a key is already in it</em>. These are decryption diagrams, not attacks. Hand the rig one prime and it manufactures the other four different ways. Hand it nothing and you hold what you started with: a featureless rim of length N, no distinguished point, and a first affordable question — wrap the ruler of length two and see if it closes — whose answer is one brick of the wall, paid for with a full circuit of the track.</p>
+
+<p>So the wall was never a claim that the secret is absent, or faint, or sparsely written. Rig 2 shows the opposite: the factorization is transcribed redundantly, in angles and areas and remainders and ratios, all coexisting inside the public circle. What N withholds is not the mechanism but the <em>purchase point</em>. The rim's unbroken symmetry is the wall; factoring is the act of breaking that symmetry; and the only thing that can break it is the information you came to find.</p>
+
+<p class="close">The number doesn't keep its secret by concealing it. It keeps it by showing you a lock from the wrong side of the door.</p>
+
+<hr class="rule">
+
+<p class="foot">Companion to <em>The Wall at Two: Seeing Why a Number Keeps a Secret</em> and the Wall at Two video series. An interactive version of Rig 2 — track, rest, hinge, and iterate modes — accompanies this essay.</p>
+
+</div>
+</body>
+</html>
