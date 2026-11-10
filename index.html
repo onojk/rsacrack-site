@@ -99,6 +99,44 @@
   }
   .work .ext{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--turn)}
 
+  /* top nav */
+  nav.top{
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.08em;
+    padding:1.4rem 0 0;color:var(--ink-faint);
+  }
+  nav.top a{color:var(--ink-soft);border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+  nav.top a:hover{color:var(--kink);border-color:var(--kink)}
+  nav.top .sep{margin:0 .55em;color:var(--line)}
+  h2[id]{scroll-margin-top:1.5rem}
+
+  /* books */
+  .books .entry{display:flex;gap:1.3rem;align-items:flex-start;padding:1.5rem 0}
+  .books img.cover{
+    flex:0 0 auto;width:88px;height:auto;aspect-ratio:375/600;object-fit:cover;
+    border:1px solid var(--line);box-shadow:0 2px 6px rgba(26,24,20,.12);background:var(--paper-deep);
+  }
+  .books .text{flex:1;min-width:0}
+  .books .sub{display:block;font-style:italic;color:var(--ink-soft);font-size:1rem;line-height:1.4;margin-top:.25rem}
+  .books .blurb{display:block;margin-top:.5rem;font-size:1.04rem;line-height:1.5;color:var(--ink-soft)}
+  .books .links{
+    display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;margin-top:.7rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.02em;
+  }
+  .books .links a{border-bottom:1px solid transparent;transition:border-color .2s}
+  .books .links a:hover{border-color:var(--turn)}
+  .more{margin:1.4rem 0 0;font-size:1.04rem;line-height:1.5;color:var(--ink-soft)}
+  .more a{border-bottom:1px solid transparent;transition:border-color .2s}
+  .more a:hover{border-color:var(--turn)}
+  .more .mono{font-family:"IBM Plex Mono",monospace;font-size:.8rem;letter-spacing:.02em}
+
+  /* elsewhere */
+  .elsewhere{list-style:none;margin:0;padding:0}
+  .elsewhere li{border-top:1px solid var(--line);padding:.85rem 0;font-size:1.04rem;line-height:1.45;color:var(--ink-soft)}
+  .elsewhere li:last-child{border-bottom:1px solid var(--line)}
+  .elsewhere a{font-family:"Fraunces",serif;font-weight:500;font-size:1.12rem;color:var(--ink);transition:color .18s}
+  .elsewhere a:hover{color:var(--kink)}
+  .elsewhere .arrow{color:var(--turn);font-family:"IBM Plex Mono",monospace;font-size:.8rem}
+
   footer{
     margin-top:4rem;border-top:1px solid var(--line);padding:2.2rem 0 5rem;
     font-family:"IBM Plex Mono",monospace;font-size:.76rem;line-height:1.8;
@@ -112,6 +150,8 @@
     header.hero{padding-top:3.5rem}
     .tagline{font-size:1.15rem}
     .work .title{font-size:1.25rem}
+    .books .entry{gap:1rem}
+    .books img.cover{width:68px}
   }
   @media (prefers-reduced-motion:no-preference){
     .kinkrule path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.2s ease-out forwards}
@@ -120,6 +160,11 @@
 </style>
 </head>
 <body>
+<nav class="top" aria-label="Site">
+  <div class="wrap">
+    <a href="#essays">Essays</a><span class="sep">·</span><a href="#research">Research</a><span class="sep">·</span><a href="#books">Books</a><span class="sep">·</span><a href="https://onojk123.com/">onojk123.com ↗</a>
+  </div>
+</nav>
 <header class="hero">
   <div class="wrap">
     <p class="eyebrow">Factoring · primes · the wall</p>
@@ -142,7 +187,7 @@
       <p>The throughline is a claim that keeps recovering itself from different angles — that factoring resists us because a number's <strong>magnitude</strong> and its <strong>factors</strong> are two readings that never reduce to one. The work below circles that claim, building it up from physical pictures before reaching for abstraction, and prefers an honest null result over an overclaim.</p>
     </div>
 
-    <h2><span class="h2-eyebrow">Essays</span>Reading the wall</h2>
+    <h2 id="essays"><span class="h2-eyebrow">Essays</span>Reading the wall</h2>
     <ul class="work">
       <li>
         <a class="entry" href="/rig-2/">
@@ -194,7 +239,7 @@
       </li>
     </ul>
 
-    <h2><span class="h2-eyebrow">Research</span>The construction</h2>
+    <h2 id="research"><span class="h2-eyebrow">Research</span>The construction</h2>
     <ul class="work">
       <li>
         <a class="entry" href="/collapse/">
@@ -222,12 +267,83 @@
       </li>
     </ul>
 
+    <h2 id="books"><span class="h2-eyebrow">Books</span>The books</h2>
+    <ul class="work books">
+      <li>
+        <div class="entry">
+          <img class="cover" src="/img/books/the-wall-at-two.jpg" alt="Cover of The Wall at Two" width="375" height="600" loading="lazy">
+          <div class="text">
+            <span class="title">The Wall at Two</span>
+            <span class="sub">Seeing Why a Number Keeps a Secret</span>
+            <span class="blurb">N gives you the circle. It withholds the angle. A visual way into why factoring is hard.</span>
+            <span class="links"><a href="https://www.amazon.com/dp/B0H74NF3LY">Amazon ↗</a><a href="https://youtu.be/uf-J8AQUsz8">Watch the free read-along ↗</a></span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="entry">
+          <img class="cover" src="/img/books/preservation-and-horizons.jpg" alt="Cover of Preservation and Horizons" width="375" height="600" loading="lazy">
+          <div class="text">
+            <span class="title">Preservation and Horizons</span>
+            <span class="sub">On Difficulty, Verification, and Structural Limits</span>
+            <span class="blurb">What it costs to check an answer, what it costs to find one, and where the structural limits sit.</span>
+            <span class="links"><a href="https://www.amazon.com/dp/B0GHZNB9WP">Amazon ↗</a><a href="https://youtu.be/SAHCM3tFhv4">Watch the free read-along ↗</a></span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="entry">
+          <img class="cover" src="/img/books/the-real-gatekeeper.jpg" alt="Cover of The Real Gatekeeper" width="375" height="600" loading="lazy">
+          <div class="text">
+            <span class="title">The Real Gatekeeper</span>
+            <span class="sub">What Difficulty Is Made Of, and Who Paid It First</span>
+            <span class="blurb">The toll, the forgetting, the buffer and the asymmetry: what difficulty is made of.</span>
+            <span class="links"><a href="https://www.amazon.com/dp/B0HNG5RMF7">Amazon ↗</a><a href="https://youtu.be/QYf_ayng_wY">Watch the free audiobook ↗</a></span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="entry">
+          <img class="cover" src="/img/books/big-book-of-prime-secrets.jpg" alt="Cover of The Big Book of Prime Secrets" width="375" height="600" loading="lazy">
+          <div class="text">
+            <span class="title">The Big Book of Prime Secrets</span>
+            <span class="sub">How Numbers Keep Secrets, and Why No One Has Cracked Them</span>
+            <span class="blurb">Four books in one volume: The Wall at Two, Preservation and Horizons, The Real Gatekeeper and Light Through the Holes.</span>
+            <span class="links"><a href="https://www.amazon.com/dp/B0HPZXW944">Amazon ↗</a><a href="https://youtu.be/YzuMakgTa5k">Read-along, Vol. 1 ↗</a><a href="https://youtu.be/8QsHtq_bP4g">Vol. 2 ↗</a></span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="entry">
+          <img class="cover" src="/img/books/light-through-the-holes.jpg" alt="Cover of Light Through the Holes" width="375" height="600" loading="lazy">
+          <div class="text">
+            <span class="title">Light Through the Holes</span>
+            <span class="sub">Sieves, Strikes, and the Price of Seeing Primes</span>
+            <span class="blurb">A history of the sieve, from Eratosthenes' counting board to machines that listened for light.</span>
+            <span class="links"><a href="https://youtu.be/kgZy1sMyffM">Watch the free read-along ↗</a></span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <p class="more"><em>Fiction:</em> <a href="https://onojk123.com/#books">The Number Country, a portal fantasy where the number line is a place →</a></p>
+    <p class="more"><a class="mono" href="https://onojk123.com/#books">All books →</a></p>
+
+    <h2 id="elsewhere"><span class="h2-eyebrow">Elsewhere</span>Other rooms</h2>
+    <ul class="elsewhere">
+      <li><a href="https://onojk123.com/">onojk123.com</a> — The Rig, essays, projects, ONOJK Radio</li>
+      <li><a href="https://onojk123.com/rig/">The Rig</a> — a way to see factoring <span class="arrow">→</span></li>
+      <li><a href="https://github.com/onojk/lumens-per-watt">lumens-per-watt</a> — evolving factoring algorithms scored by illumination</li>
+      <li><a href="https://backgroundhours.com/">backgroundhours.com</a> — an evening's notebook</li>
+      <li><a href="https://jonathankendallart.com/">jonathankendallart.com</a> — art and music</li>
+      <li><a href="https://onojk123.com/radio/">ONOJK Radio</a> <span class="arrow">→</span></li>
+    </ul>
+
   </div>
 </main>
 
 <footer>
   <div class="wrap">
-    Jonathan Kendall — San Diego · <a href="https://github.com/onojk">github.com/onojk</a><br>
+    Jonathan Kendall — San Diego · <a href="https://github.com/onojk">github.com/onojk</a> · <a href="https://onojk123.com/">onojk123.com</a> · <a href="https://onojk123.com/radio/">Radio</a><br>
     rsacrack.com — a notebook on factoring, kept in the open.
   </div>
 </footer>
